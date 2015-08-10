@@ -1,0 +1,26 @@
+{
+  "name": "axs-cookie-control",
+  "version": "1.0.0",
+  "homepage": "https://github.com/abraxas-medien/cookie-control",
+  "authors": [
+    "Adrian Tello <tello@abraxas-medien.de>"
+  ],
+  "description": "Cookie control plugin",
+  "main": "gulp",
+  "keywords": [
+    "Jquery",
+    "UI",
+    "plugin",
+    "cookie",
+    "control"
+  ],
+  "license": "GPL v3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}
