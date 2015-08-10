@@ -10,6 +10,8 @@ var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var fs = require('fs');
 
+var Server = require('karma').Server;
+
 //Settings
 var outputName = 'axs-cookie-control';
 
@@ -84,6 +86,24 @@ gulp.task('prepare:css', ['prepare:main'], function(cb){
 	});
 });
 
-gulp.task('test', function() {
-	//TODO
+gulp.task('test', ['build:js'], function(done) {
+	try{
+		new Server({
+			configFile: __dirname + '/karma.conf.js',
+			singleRun: true
+		}, done).start();
+	}catch(error){
+		done(error);
+	};
+});
+
+gulp.task('tdd', ['build:js'], function(done) {
+	try{
+		new Server({
+			configFile: __dirname + '/karma.tdd.conf.js',
+			singleRun: false
+		}, done).start();
+	}catch(error){
+		done(error);
+	};
 });
