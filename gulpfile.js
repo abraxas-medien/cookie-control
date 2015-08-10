@@ -3,7 +3,10 @@
  */
 var gulp = require('gulp');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var concatCss = require('gulp-concat-css');
+var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 var fs = require('fs');
 
 //Settings
@@ -33,6 +36,10 @@ gulp.task('build:js', ['prepare:js'], function(){
 	return gulp
 		.src(srcJsFolder + '*.js')
 		.pipe(concat(outputName + '.js'))
+		.pipe(gulp.dest(distJsFolder))
+		.pipe(sourcemaps.init())
+		.pipe(uglify())
+		.pipe(rename(outputName + '.min.js'))		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(distJsFolder));
 });
 
