@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/abraxas-medien/cookie-control",
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-concat-css": "^2.2.0"
   }
 }
