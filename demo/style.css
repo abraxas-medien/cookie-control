@@ -1,0 +1,15 @@
+body{
+    background-color:   #EEE;
+    color:              #000;
+    padding:            40px 0 0 0;
+}
+
+#container{
+    margin:     0 auto;
+    padding:    50px;
+    max-width:  910px;
+    background-color: #FFF;
+    -webkit-box-shadow: 0px 2px 15px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 2px 15px 5px rgba(0,0,0,0.5);
+    box-shadow: 0px 2px 15px 5px rgba(0,0,0,0.5);
+}
