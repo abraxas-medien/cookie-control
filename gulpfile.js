@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var concatCss = require('gulp-concat-css');
+var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var fs = require('fs');
@@ -29,7 +30,15 @@ gulp.task('default', ['build:js', 'build:css']);
 gulp.task('build:css', ['prepare:css'], function(){
 	return gulp.src(srcCssFolder + '*.css')
 		.pipe(concatCss(outputName + '.css'))
+		.pipe(gulp.dest(distCssFolder))
+		.pipe(sourcemaps.init())
+		.pipe(minifyCss({
+			compatibility: 'ie8'
+		}))
+		.pipe(rename(outputName + '.min.css'))
+		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(distCssFolder));
+		;
 });
 
 gulp.task('build:js', ['prepare:js'], function(){
