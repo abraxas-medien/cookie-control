@@ -52,15 +52,15 @@ $.widget( "axs.cookieControl", {
 		this._setOptions(this.options, true);
 	},
 	_initDOM: function(){
-		this.element.addClass('axsCookieControl');
+		this.element.addClass('axs-cookie-control');
 
 		//Set the content
-		var wrapper = $('<div class="cookieWrapper"></div>');
-		var textWrapper = $('<div class="textWrapper"></div>');
+		var wrapper = $('<div class="axs-cookie-control-wrapper"></div>');
+		var textWrapper = $('<div class="axs-cookie-control-text-wrapper"></div>');
 
-		var acceptButton = $('<button type="button" class="acceptButton"></button>');
-		var declineButton = $('<button type="button" class="declineButton"></button>');
-		var buttons = $('<div class="buttons"></div>');
+		var acceptButton = $('<button type="button" class="axs-cookie-control-accept-button"></button>');
+		var declineButton = $('<button type="button" class="axs-cookie-control-decline-button"></button>');
+		var buttons = $('<div class="axs-cookie-control-buttons"></div>');
 		buttons.append(declineButton, acceptButton);
 
 		wrapper.append(textWrapper, buttons);

@@ -52,7 +52,7 @@
   font-weight: bolder;
 }
 
-.axs-cookie-control-text-wrapper a:hover,{
+.axs-cookie-control-text-wrapper a:hover{
   text-decoration: none;
 }
 
@@ -68,18 +68,18 @@
   transition: background-color 0.2s;
 }
 
-.axs-cookie-control-buttons button.declineButton{
+.axs-cookie-control-decline-button{
   background-color: #AF3B3B;
 }
 
-.axs-cookie-control-buttons button.declineButton:hover{
+.axs-cookie-control-decline-button:hover{
   background-color: #d14444;
 }
 
-.axs-cookie-control-buttons button.acceptButton{
+.axs-cookie-control-accept-button{
   background-color: #7DAF3B;
 }
 
-.axs-cookie-control-buttons button.acceptButton:hover{
+.axs-cookie-control-accept-button:hover{
   background-color: #89c344;
 }
