@@ -110,5 +110,13 @@
 			console.log("To:" );
 			console.log(values.after);
 		});
+
+		element.on('cookiecontrolchangedstatus', function(event, values){
+			console.log("Status changed");
+			console.log("From:");
+			console.log(values.before);
+			console.log("To:" );
+			console.log(values.after);
+		});
 	});
 })();

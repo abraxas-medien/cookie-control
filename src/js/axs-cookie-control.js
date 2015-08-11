@@ -189,8 +189,12 @@ $.widget( "axs.cookieControl", {
 			this.element.addClass("bottom");
 		}
 	},
-	_cookieChanged: function(){
-		this._updateWidgetStatus();
+	_cookieChanged: function(event, values){
+		var beforeStatus = this.getStatus(values.before.name);
+		$.removeCookie(values.before.name, {path: values.before.path});
+
+		var status = this.getStatus();
+		this._updateWidgetStatus(status, beforeStatus);
 	},
 	_setStatusIfChanged: function(status){
 		var currStatus = this.getStatus();
@@ -218,25 +222,61 @@ $.widget( "axs.cookieControl", {
 		var statusBefore = this.getStatus();
 		this._setStatusImpl(status);
 		if (statusBefore != status) {
-			this._updateWidgetStatus();
+			this._updateWidgetStatus(status, statusBefore);
 		}
 	},
-	getStatus: function(){
-		return $.cookie(this.options.cookie.name);
+	getStatus: function(cookieName){
+		if (cookieName === undefined) {
+			cookieName = this.options.cookie.name;
+		}
+
+		var status = $.cookie(cookieName);
+
+		if (status === 'true') {
+			return true;
+		} else if(status === 'false') {
+			return false;
+		} else {
+			return status;
+		}
 	},
-	_updateWidgetStatus: function(){
-		var status = this.getStatus();
+	_updateWidgetStatus: function(status, oldStatus){
+
+		if(status === oldStatus) {
+			return;
+		}
 
 		if (status == undefined) {
 			this.element.removeClass("hidden");
-			this._trigger( "default" );
+			this._trigger(
+				"changedstatus",
+				null,
+				{
+					before: oldStatus,
+					after: status
+				}
+			);
 		} else {
 			this.element.addClass("hidden");
 
 			if (status == true) {
-				this._trigger( "accept" );
+				this._trigger(
+					"changedstatus",
+					null,
+					{
+						before: oldStatus,
+						after: status
+					}
+				);
 			} else {
-				this._trigger( "decline" );
+				this._trigger(
+					"changedstatus",
+					null,
+					{
+						before: oldStatus,
+						after: status
+					}
+				);
 			}
 		}
 	},
