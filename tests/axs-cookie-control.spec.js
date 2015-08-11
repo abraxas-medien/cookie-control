@@ -9,6 +9,62 @@ describe("axs-cookie-control plugin should", function() {
 		widgetElement.cookieControl();
 	});
 
+	describe('with no cookie saved before', function(){
+		beforeEach(function(){
+			//Remove cookie
+			$.removeCookie('axs-cookie-control', {path: '/'});
+		});
+
+		it('should fire a status changed event when the status changes', function(){
+			var called = false;
+			var values = {};
+
+			var listener = function(event, listValues){
+				called = true;
+				values = listValues;
+			};
+
+			widgetElement.on('cookiecontrolchangedstatus', listener);
+
+			//Change the status to declined
+			widgetElement.cookieControl('setStatus', false);
+
+			expect(called).toBe(true);
+			expect(values).toEqual({
+				before: undefined,
+				after: false
+			});
+
+			//Reset
+			called = false;
+			values = {};
+
+			//Change the status to declined (no real change)
+			widgetElement.cookieControl('setStatus', false);
+			expect(called).toBe(false);
+
+			//Change the status to accepted
+			widgetElement.cookieControl('setStatus', true);
+			expect(called).toBe(true);
+			expect(values).toEqual({
+				before: false,
+				after: true
+			});
+
+			//Reset
+			called = false;
+			values = {};
+
+			//Set the default status
+			widgetElement.cookieControl('setStatus', undefined);
+			expect(called).toBe(true);
+			expect(values).toEqual({
+				before: true,
+				after: undefined
+			});
+		});
+	});
+
 	it("become the expected structure and classes when initialized", function() {
 		expect(widgetElement.hasClass('axs-cookie-control')).toBe(true);
 
@@ -48,57 +104,5 @@ describe("axs-cookie-control plugin should", function() {
 		expect(widgetElement.hasClass('top')).toBe(false);
 		expect(widgetElement.hasClass('bottom')).toBe(false);
 		expect(widgetElement.hasClass('hidden')).toBe(false);
-	});
-
-	it('should fire a status changed event when the status changes', function(){
-		var called = false;
-		var values = {};
-
-		var listener = function(event, listValues){
-			called = true;
-			values = listValues;
-		};
-
-		widgetElement.on('cookiecontrolchangedstatus', listener);
-
-		//Change the status to declined
-		widgetElement.cookieControl('setStatus', false);
-
-		expect(called).toBe(true);
-		expect(values).toEqual({
-			before: undefined,
-			after: false
-		});
-
-		//Reset
-		called = false;
-		values = {};
-
-		//Change the status to declined (no real change)
-		widgetElement.cookieControl('setStatus', false);
-		expect(called).toBe(false);
-
-		//Change the status to accepted
-		widgetElement.cookieControl('setStatus', true);
-		expect(called).toBe(true);
-		expect(values).toEqual({
-			before: false,
-			after: true
-		});
-
-		//Reset
-		called = false;
-		values = {};
-
-		//Set the default status
-		widgetElement.cookieControl('setStatus', undefined);
-		expect(called).toBe(true);
-		expect(values).toEqual({
-			before: true,
-			after: undefined
-		});
-
-		//Remove cookies after the test has run
-		$.removeCookie('axs-cookie-control', {path: '/'});
 	});
 });
