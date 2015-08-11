@@ -9,10 +9,6 @@ describe("axs-cookie-control plugin should", function() {
 		widgetElement.cookieControl();
 	});
 
-	function testEventListenerCalled(){
-
-	}
-
 	it("become the expected structure and classes when initialized", function() {
 		expect(widgetElement.hasClass('axs-cookie-control')).toBe(true);
 
