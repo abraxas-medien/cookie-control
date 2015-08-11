@@ -163,3 +163,6 @@ $("#cookieDiv").on('cookiecontrolchangedbuttons', function(event, values){
     }
 }
 ```
+
+##Credits
+Baked by Adrian Tello <a href="http://www.abraxas-medien.de">(Abraxas-Medien)</a>
