@@ -97,6 +97,17 @@ gulp.task('test', ['build:js'], function(done) {
 	};
 });
 
+gulp.task('test:ci', ['build:js'], function(done) {
+	try{
+		new Server({
+			configFile: __dirname + '/karma.ci.conf.js',
+			singleRun: true
+		}, done).start();
+	}catch(error){
+		done(error);
+	};
+});
+
 gulp.task('tdd', ['build:js'], function(done) {
 	try{
 		new Server({
