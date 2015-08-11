@@ -46,7 +46,7 @@ var settings = {
 $(myElement).cookieControl(settings);
 ```
 
-####Destroy the instance
+####Destroy the instance and restore the dom
 ```javascript
 instance.destroy();
 ```

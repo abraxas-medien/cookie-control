@@ -314,5 +314,10 @@ $.widget( "axs.cookieControl", {
 			// allows x[ p ] to be set to undefined
 		}
 		return true;
+	},
+	_destroy: function() {
+		this.element.empty();
+
+		this.element.removeClass('top bottom axs-cookie-control hidden');
 	}
 });
