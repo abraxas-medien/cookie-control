@@ -42,6 +42,18 @@ describe("axs-cookie-control plugin should", function() {
 		expect(acceptButton.text().length).not.toBe(0);
 	});
 
+	it('should leave the dom as before creating the widget, when calling destroy', function(){
+		widgetElement.cookieControl('destroy');
+
+		var children = widgetElement.children();
+
+		expect(children.length).toBe(0);
+		expect(widgetElement.hasClass('axs-cookie-control')).toBe(false);
+		expect(widgetElement.hasClass('top')).toBe(false);
+		expect(widgetElement.hasClass('bottom')).toBe(false);
+		expect(widgetElement.hasClass('hidden')).toBe(false);
+	});
+
 	it('should fire a status changed event when the status changes', function(){
 		var called = false;
 		var values = {};
