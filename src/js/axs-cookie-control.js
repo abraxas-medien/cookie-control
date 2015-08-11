@@ -265,7 +265,7 @@ $.widget( "axs.cookieControl", {
 			if ( typeof( x[ p ] ) !== "object" ) return false;
 			// Numbers, Strings, Functions, Booleans must be strictly equal
 
-			if ( ! Object.equals( x[ p ],  y[ p ] ) ) return false;
+			if ( ! this._equals( x[ p ],  y[ p ] ) ) return false;
 			// Objects and Arrays must be tested recursively
 		}
 
