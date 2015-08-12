@@ -1,7 +1,7 @@
 /**
  * Created by Adrian Tello on 10.08.15.
  */
-describe("axs-cookie-control plugin should", function() {
+describe("axs-cookie-control plugin", function() {
 	var widgetElement;
 
 	describe('with no cookie saved before', function(){
@@ -72,7 +72,7 @@ describe("axs-cookie-control plugin should", function() {
 			});
 		});
 
-		it("become the expected structure and classes when initialized", function() {
+		it("should become the expected structure and classes when initialized", function() {
 			expect(widgetElement.hasClass('axs-cookie-control')).toBe(true);
 
 			var wrapper = widgetElement.children();
@@ -114,7 +114,7 @@ describe("axs-cookie-control plugin should", function() {
 		});
 	});
 
-	describe('with the status set as accepted should', function(){
+	describe('with the status set as accepted', function(){
 		beforeEach(function(){
 			//Create cookie
 			$.cookie('axs-cookie-control', true, {path: '/'});
@@ -132,12 +132,12 @@ describe("axs-cookie-control plugin should", function() {
 			widgetElement.off('cookiecontrolchangedstatus', initListener);
 		});
 
-		it('have the class hidden set', function(){
+		it('should have the class hidden set', function(){
 			expect(widgetElement.hasClass('hidden')).toBe(true);
 		});
 	});
 
-	describe('with the status set as declined should', function(){
+	describe('with the status set as declined', function(){
 		beforeEach(function(){
 			//Create cookie
 			$.cookie('axs-cookie-control', false, {path: '/'});
@@ -155,7 +155,7 @@ describe("axs-cookie-control plugin should", function() {
 			widgetElement.off('cookiecontrolchangedstatus', initListener);
 		});
 
-		it('have the class hidden set', function(){
+		it('should have the class hidden set', function(){
 			expect(widgetElement.hasClass('hidden')).toBe(true);
 		});
 	});
