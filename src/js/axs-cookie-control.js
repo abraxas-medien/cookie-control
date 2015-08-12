@@ -50,7 +50,6 @@ $.widget( "axs.cookieControl", {
 			}
 		);
 
-
 		//Set initial settings
 		this._setOptions(this.options, true);
 		this._creating = false;
@@ -69,6 +68,14 @@ $.widget( "axs.cookieControl", {
 
 		wrapper.append(textWrapper, buttons);
 		this.element.append(wrapper);
+
+		var widget = this;
+		$(document.body).on('click', function(event){
+			widget._onClick.apply(widget, [event]);
+		});
+		$(window).on('scroll', function(event){
+			widget._onScroll.apply(widget, [event]);
+		});
 
 		return {
 			wrapper: wrapper,
@@ -136,45 +143,16 @@ $.widget( "axs.cookieControl", {
 		declineButton.toggle(this.options.buttons.decline);
 	},
 	_onScroll: function(){
-		this.setStatus(true);
+		if ((this.options.autoAccept === true || this.options.autoAccept.scroll === true) && this.getStatus() == undefined) {
+			this.setStatus(true);
+		}
 	},
 	_onClick: function(){
-		this.setStatus(true);
+		if ((this.options.autoAccept === true || this.options.autoAccept.scroll === true) && this.getStatus() == undefined) {
+			this.setStatus(true);
+		}
 	},
 	_autoAcceptChanged: function(){
-		if (this.isAutoAcceptEnabled()) {
-			if (this.options.autoAccept === true || this.options.autoAccept.scroll) {
-				this._on(
-					window,
-					{
-						"scroll": this._onScroll
-					}
-				);
-
-				this._scrollListenerEnabled = true;
-			} else {
-				if (this._scrollListenerEnabled) {
-					this._off(window, 'scroll', this._onScroll);
-				}
-				this._scrollListenerEnabled = false;
-			}
-
-			if (this.options.autoAccept === true || this.options.autoAccept.click) {
-				this._on(
-					document.body,
-					{
-						"click": this._onClick
-					}
-				);
-				this._clickListenerEnabled = true;
-			} else {
-				if (this._clickListenerEnabled) {
-					this._off(document.body, 'click', this._onClick);
-				}
-				this._clickListenerEnabled = false;
-			}
-		}
-
 		this._updateText();
 	},
 	_analyticsOnlyChanged: function(){
