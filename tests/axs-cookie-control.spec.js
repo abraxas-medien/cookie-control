@@ -14,6 +14,7 @@ describe("axs-cookie-control plugin", function() {
 			};
 
 			widgetElement = $("<div></div>");
+			$(document.body).append(widgetElement);
 
 			widgetElement.on('cookiecontrolchangedstatus', initListener);
 			widgetElement.cookieControl();
@@ -125,6 +126,7 @@ describe("axs-cookie-control plugin", function() {
 			};
 
 			widgetElement = $("<div></div>");
+			$(document.body).append(widgetElement);
 
 			widgetElement.on('cookiecontrolchangedstatus', initListener);
 			widgetElement.cookieControl();
@@ -148,6 +150,7 @@ describe("axs-cookie-control plugin", function() {
 			};
 
 			widgetElement = $("<div></div>");
+			$(document.body).append(widgetElement);
 
 			widgetElement.on('cookiecontrolchangedstatus', initListener);
 			widgetElement.cookieControl();
@@ -158,5 +161,9 @@ describe("axs-cookie-control plugin", function() {
 		it('should have the class hidden set', function(){
 			expect(widgetElement.hasClass('hidden')).toBe(true);
 		});
+	});
+
+	afterEach(function(){
+		widgetElement.remove();
 	});
 });
