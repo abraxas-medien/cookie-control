@@ -4,15 +4,20 @@
 describe("axs-cookie-control plugin should", function() {
 	var widgetElement;
 
-	beforeEach(function() {
-		widgetElement = $("<div></div>");
-		widgetElement.cookieControl();
-	});
-
 	describe('with no cookie saved before', function(){
-		beforeEach(function(){
+		beforeEach(function() {
 			//Remove cookie
 			$.removeCookie('axs-cookie-control', {path: '/'});
+
+			var initListener = function (event, values) {
+				expect(false).toBe(true); //Should not be called
+			};
+
+			widgetElement = $("<div></div>");
+
+			widgetElement.on('cookiecontrolchangedstatus', initListener);
+			widgetElement.cookieControl();
+			widgetElement.off('cookiecontrolchangedstatus', initListener);
 		});
 
 		it('should fire a status changed event when the status changes', function(){
@@ -32,7 +37,8 @@ describe("axs-cookie-control plugin should", function() {
 			expect(called).toBe(true);
 			expect(values).toEqual({
 				before: undefined,
-				after: false
+				after: false,
+				creating: false
 			});
 
 			//Reset
@@ -48,7 +54,8 @@ describe("axs-cookie-control plugin should", function() {
 			expect(called).toBe(true);
 			expect(values).toEqual({
 				before: false,
-				after: true
+				after: true,
+				creating: false
 			});
 
 			//Reset
@@ -60,49 +67,96 @@ describe("axs-cookie-control plugin should", function() {
 			expect(called).toBe(true);
 			expect(values).toEqual({
 				before: true,
-				after: undefined
+				after: undefined,
+				creating: false
 			});
+		});
+
+		it("become the expected structure and classes when initialized", function() {
+			expect(widgetElement.hasClass('axs-cookie-control')).toBe(true);
+
+			var wrapper = widgetElement.children();
+			expect(wrapper.hasClass('axs-cookie-control-wrapper')).toBe(true);
+
+			//Validate that has 2 children (text-wrapper and buttons-div...)
+			var children = wrapper.children();
+			expect(children.length).toBe(2);
+
+			var textWrapper = $(children[0]);
+			expect(textWrapper.hasClass('axs-cookie-control-text-wrapper')).toBe(true);
+			expect(textWrapper.text().length).not.toBe(0);
+
+			var buttonsDiv = $(children[1]);
+			expect(buttonsDiv.hasClass('axs-cookie-control-buttons')).toBe(true);
+
+			var buttons = buttonsDiv.children();
+			expect(buttons.length).toBe(2);
+
+			var declineButton = $(buttons[0]);
+			expect(declineButton.hasClass('axs-cookie-control-decline-button')).toBe(true);
+			expect(declineButton.text().length).not.toBe(0);
+
+			var acceptButton = $(buttons[1]);
+			expect(acceptButton.hasClass('axs-cookie-control-accept-button')).toBe(true);
+			expect(acceptButton.text().length).not.toBe(0);
+		});
+
+		it('should leave the dom as before creating the widget, when calling destroy', function(){
+			widgetElement.cookieControl('destroy');
+
+			var children = widgetElement.children();
+
+			expect(children.length).toBe(0);
+			expect(widgetElement.hasClass('axs-cookie-control')).toBe(false);
+			expect(widgetElement.hasClass('top')).toBe(false);
+			expect(widgetElement.hasClass('bottom')).toBe(false);
+			expect(widgetElement.hasClass('hidden')).toBe(false);
 		});
 	});
 
-	it("become the expected structure and classes when initialized", function() {
-		expect(widgetElement.hasClass('axs-cookie-control')).toBe(true);
+	describe('with the status set as accepted should', function(){
+		beforeEach(function(){
+			//Create cookie
+			$.cookie('axs-cookie-control', true, {path: '/'});
 
-		var wrapper = widgetElement.children();
-		expect(wrapper.hasClass('axs-cookie-control-wrapper')).toBe(true);
+			var listenerCalled = false;
+			var initListener = function (event, values) {
+				listenerCalled = true;
+			};
 
-		//Validate that has 2 children (text-wrapper and buttons-div...)
-		var children = wrapper.children();
-		expect(children.length).toBe(2);
+			widgetElement = $("<div></div>");
 
-		var textWrapper = $(children[0]);
-		expect(textWrapper.hasClass('axs-cookie-control-text-wrapper')).toBe(true);
-		expect(textWrapper.text().length).not.toBe(0);
+			widgetElement.on('cookiecontrolchangedstatus', initListener);
+			widgetElement.cookieControl();
+			expect(listenerCalled).toBe(true);
+			widgetElement.off('cookiecontrolchangedstatus', initListener);
+		});
 
-		var buttonsDiv = $(children[1]);
-		expect(buttonsDiv.hasClass('axs-cookie-control-buttons')).toBe(true);
-
-		var buttons = buttonsDiv.children();
-		expect(buttons.length).toBe(2);
-
-		var declineButton = $(buttons[0]);
-		expect(declineButton.hasClass('axs-cookie-control-decline-button')).toBe(true);
-		expect(declineButton.text().length).not.toBe(0);
-
-		var acceptButton = $(buttons[1]);
-		expect(acceptButton.hasClass('axs-cookie-control-accept-button')).toBe(true);
-		expect(acceptButton.text().length).not.toBe(0);
+		it('have the class hidden set', function(){
+			expect(widgetElement.hasClass('hidden')).toBe(true);
+		});
 	});
 
-	it('should leave the dom as before creating the widget, when calling destroy', function(){
-		widgetElement.cookieControl('destroy');
+	describe('with the status set as declined should', function(){
+		beforeEach(function(){
+			//Create cookie
+			$.cookie('axs-cookie-control', false, {path: '/'});
 
-		var children = widgetElement.children();
+			var listenerCalled = false;
+			var initListener = function (event, values) {
+				listenerCalled = true;
+			};
 
-		expect(children.length).toBe(0);
-		expect(widgetElement.hasClass('axs-cookie-control')).toBe(false);
-		expect(widgetElement.hasClass('top')).toBe(false);
-		expect(widgetElement.hasClass('bottom')).toBe(false);
-		expect(widgetElement.hasClass('hidden')).toBe(false);
+			widgetElement = $("<div></div>");
+
+			widgetElement.on('cookiecontrolchangedstatus', initListener);
+			widgetElement.cookieControl();
+			expect(listenerCalled).toBe(true);
+			widgetElement.off('cookiecontrolchangedstatus', initListener);
+		});
+
+		it('have the class hidden set', function(){
+			expect(widgetElement.hasClass('hidden')).toBe(true);
+		});
 	});
 });

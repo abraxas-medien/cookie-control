@@ -31,6 +31,8 @@ $.widget( "axs.cookieControl", {
 		}
 	},
 	_create: function(){
+		this._creating = true;
+
 		this.data = {};
 
 		this._dom = this._initDOM();
@@ -48,8 +50,10 @@ $.widget( "axs.cookieControl", {
 			}
 		);
 
+
 		//Set initial settings
 		this._setOptions(this.options, true);
+		this._creating = false;
 	},
 	_initDOM: function(){
 		this.element.addClass('axs-cookie-control');
@@ -93,7 +97,8 @@ $.widget( "axs.cookieControl", {
 
 				widget._trigger( "changed" + key, null, {
 					before: beforeValue,
-					after: value
+					after: value,
+					creating: this._creating
 				});
 			}
 		});
@@ -193,8 +198,7 @@ $.widget( "axs.cookieControl", {
 		var beforeStatus = this.getStatus(values.before.name);
 		$.removeCookie(values.before.name, {path: values.before.path});
 
-		var status = this.getStatus();
-		this._updateWidgetStatus(status, beforeStatus);
+		this.setStatus(beforeStatus);
 	},
 	_setStatusIfChanged: function(status){
 		var currStatus = this.getStatus();
@@ -253,7 +257,8 @@ $.widget( "axs.cookieControl", {
 				null,
 				{
 					before: oldStatus,
-					after: status
+					after: status,
+					creating: this._creating
 				}
 			);
 		} else {
@@ -265,7 +270,8 @@ $.widget( "axs.cookieControl", {
 					null,
 					{
 						before: oldStatus,
-						after: status
+						after: status,
+						creating: this._creating
 					}
 				);
 			} else {
@@ -274,7 +280,8 @@ $.widget( "axs.cookieControl", {
 					null,
 					{
 						before: oldStatus,
-						after: status
+						after: status,
+						creating: this._creating
 					}
 				);
 			}
