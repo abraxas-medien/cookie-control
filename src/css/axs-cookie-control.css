@@ -13,6 +13,7 @@
   box-shadow: 1px -1px 4px 0 rgba(16, 17, 20, 0.39);
   text-align: center;
   line-height: 25px;
+  z-index: 16777271;
 }
 
 .axs-cookie-control.bottom{
