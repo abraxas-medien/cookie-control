@@ -116,6 +116,38 @@ describe("axs-cookie-control plugin", function() {
 				expect(widgetElement.hasClass('bottom')).toBe(false);
 				expect(widgetElement.hasClass('hidden')).toBe(false);
 			});
+
+			it('should become declined when clicking the decline button', function(){
+				var called = false;
+				widgetElement.on('cookiecontrolchangedstatus', function(event, values){
+					called = true;
+
+					expect(values).toEqual({
+						before: undefined,
+						after: false,
+						creating: false
+					});
+				});
+
+				$(widgetElement).find('.axs-cookie-control-decline-button').trigger( "click" );
+				expect(called).toBe(true);
+			});
+
+			it('should become accepted when clicking the accept button', function(){
+				var called = false;
+				widgetElement.on('cookiecontrolchangedstatus', function(event, values){
+					called = true;
+
+					expect(values).toEqual({
+						before: undefined,
+						after: true,
+						creating: false
+					});
+				});
+
+				$(widgetElement).find('.axs-cookie-control-accept-button').trigger( "click" );
+				expect(called).toBe(true);
+			});
 		});
 
 		describe('and the auto accept enabled', function(){

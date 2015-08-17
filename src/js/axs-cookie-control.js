@@ -77,6 +77,24 @@ $.widget( "axs.cookieControl", {
 			widget._onScroll.apply(widget, [event]);
 		});
 
+		this._on(acceptButton, {
+			click: function(event){
+				widget.setStatus.apply(widget, [true]);
+
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
+
+		this._on(declineButton, {
+			click: function(event){
+				widget.setStatus.apply(widget, [false]);
+
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
+
 		return {
 			wrapper: wrapper,
 			textWrapper: textWrapper,
