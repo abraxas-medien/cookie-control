@@ -67,7 +67,7 @@
 			var buttons = $('<div class="axs-cookie-control-buttons"></div>');
 			buttons.append(declineButton, acceptButton);
 
-			wrapper.append(textWrapper, buttons);
+			wrapper.append(textWrapper, '&nbsp;', buttons);
 			this.element.append(wrapper);
 
 			var widget = this;
